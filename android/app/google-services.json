@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1082972567264",
+    "project_id": "adammultivendor",
+    "storage_bucket": "adammultivendor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082972567264:android:9199df42458e3945748285",
+        "android_client_info": {
+          "package_name": "com.souqadam.vendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082972567264-aj86fpl7pe6l5d9hm38nlc59t9iboprp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Al3d81c6IHk2GKHfuFqNYWXQObwHRsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082972567264-aj86fpl7pe6l5d9hm38nlc59t9iboprp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
