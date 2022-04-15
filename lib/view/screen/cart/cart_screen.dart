@@ -426,46 +426,43 @@ class _CartScreenState extends State<CartScreen> {
                                         //     mainAxisAlignment:
                                         //         MainAxisAlignment.spaceBetween,
                                         //     children: [
-                                        //       // Row(
-                                        //       //     mainAxisAlignment:
-                                        //       //         MainAxisAlignment.end,
-                                        //       //     children: [
-                                        //       //       Text(
-                                        //       //         (cart.shippingList == null ||
-                                        //       //                 cart.chosenShippingList
-                                        //       //                         .length ==
-                                        //       //                     0 ||
-                                        //       //                 cart.shippingList
-                                        //       //                         .length ==
-                                        //       //                     0 ||
-                                        //       //                 cart
-                                        //       //                         .shippingList[
-                                        //       //                             0]
-                                        //       //                         .shippingMethodList ==
-                                        //       //                     null ||
-                                        //       //                 cart.shippingList[0]
-                                        //       //                         .shippingIndex ==
-                                        //       //                     -1)
-                                        //       //             ? ''
-                                        //       //             : '${cart.shippingList[0].shippingMethodList[cart.shippingList[0].shippingIndex].title.toString()}',
-                                        //       //         style: titilliumSemiBold
-                                        //       //             .copyWith(
-                                        //       //                 color: ColorResources
-                                        //       //                     .getPrimary(
-                                        //       //                         context)),
-                                        //       //         maxLines: 1,
-                                        //       //         overflow:
-                                        //       //             TextOverflow.ellipsis,
-                                        //       //       ),
-                                        //       //       SizedBox(
-                                        //       //           width: Dimensions
-                                        //       //               .PADDING_SIZE_EXTRA_SMALL),
-                                        //       //       Icon(
-                                        //       //           Icons
-                                        //       //               .keyboard_arrow_down,
-                                        //       //           color: Theme.of(context)
-                                        //       //               .primaryColor),
-                                        //       //     ]),
+                                        //       Row(
+                                        //           mainAxisAlignment:
+                                        //               MainAxisAlignment.end,
+                                        //           children: [
+                                        //             Text(
+                                        //               (cart.shippingList == null ||
+                                        //                       cart.chosenShippingList
+                                        //                               .length ==
+                                        //                           0 ||
+                                        //                       cart.shippingList
+                                        //                               .length ==
+                                        //                           0 ||
+                                        //                       cart.shippingList[0]
+                                        //                               .shippingMethodList ==
+                                        //                           null ||
+                                        //                       cart.shippingList[0]
+                                        //                               .shippingIndex ==
+                                        //                           -1)
+                                        //                   ? ''
+                                        //                   : '${cart.shippingList[0].shippingMethodList[cart.shippingList[0].shippingIndex].title.toString()}',
+                                        //               style: titilliumSemiBold
+                                        //                   .copyWith(
+                                        //                       color: ColorResources
+                                        //                           .getPrimary(
+                                        //                               context)),
+                                        //               maxLines: 1,
+                                        //               overflow:
+                                        //                   TextOverflow.ellipsis,
+                                        //             ),
+                                        //             SizedBox(
+                                        //                 width: Dimensions
+                                        //                     .PADDING_SIZE_EXTRA_SMALL),
+                                        //             Icon(
+                                        //                 Icons.keyboard_arrow_down,
+                                        //                 color: Theme.of(context)
+                                        //                     .primaryColor),
+                                        //           ]),
                                         //     ]),
                                         ),
                                   )

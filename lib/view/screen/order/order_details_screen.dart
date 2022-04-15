@@ -382,7 +382,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                                           builder: (_) => PaymentScreen(
                                                             customerID: userID,
                                                             couponCode: '',
-                                                            addressID: order.trackingModel.shippingAddress.toString(),
+                                                            // addressID: order.trackingModel.shippingAddress.toString(),
                                                           )));
                                                 },
                                                 child: Container(

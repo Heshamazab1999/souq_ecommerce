@@ -93,6 +93,6 @@ class BaseController extends GetxController {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return position = await Geolocator.getCurrentPosition();
+    return position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 }
