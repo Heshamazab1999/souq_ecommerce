@@ -60,6 +60,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
   void initState() {
     super.initState();
     _zipCodeController.text = "+02";
+
     Provider.of<LocationProvider>(context, listen: false)
         .initializeAllAddressType(context: context);
     Provider.of<LocationProvider>(context, listen: false)
@@ -205,6 +206,9 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                                                         print(
                                                                             placemarks);
                                                                         _addressController.text = placemarks
+                                                                            .first
+                                                                            .locality;
+                                                                        _x.address.value = placemarks
                                                                             .first
                                                                             .locality;
                                                                       });
@@ -521,7 +525,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         textInputType:
                                             TextInputType.streetAddress,
                                         textInputAction: TextInputAction.next,
-                                        focusNode: _addressNode,
+                                        // focusNode: _addressNode,
                                         nextNode: _nameNode,
                                         controller: _addressController,
                                       ),
@@ -558,7 +562,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         textInputType:
                                             TextInputType.streetAddress,
                                         textInputAction: TextInputAction.next,
-                                        focusNode: _cityNode,
+                                        //    focusNode: _cityNode,
                                         nextNode: _zipNode,
                                         controller: _cityController,
                                       ),
@@ -598,7 +602,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         textInputType: TextInputType.name,
                                         controller:
                                             _contactPersonNameController,
-                                        focusNode: _nameNode,
+                                        //  focusNode: _nameNode,
                                         nextNode: _numberNode,
                                         textInputAction: TextInputAction.next,
                                         capitalization:
@@ -625,7 +629,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                             context),
                                         textInputType: TextInputType.phone,
                                         textInputAction: TextInputAction.done,
-                                        focusNode: _numberNode,
+                                        //   focusNode: _numberNode,
                                         controller:
                                             _contactPersonNumberController,
                                       ),
@@ -751,7 +755,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                           );
                                           if (widget.isEnableUpdate) {
                                             addressModel.id = widget.address.id;
-                                            addressModel.id = widget.address.id;
+                                            // addressModel.id = widget.address.id;
                                             // addressModel.method = 'put';
                                             locationProvider
                                                 .updateAddress(context,

@@ -21,12 +21,15 @@ import 'package:flutter_sixvalley_ecommerce/view/basewidget/textfield/custom_tex
 import 'package:flutter_sixvalley_ecommerce/view/basewidget/title_row.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/address/add_new_address_screen.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/address/address_screen.dart';
+import 'package:flutter_sixvalley_ecommerce/view/screen/address/controller.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/address/saved_address_list_screen.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/address/saved_billing_Address_list_screen.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/address/widget/address_list_screen.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/checkout/widget/custom_check_box.dart';
+import 'package:flutter_sixvalley_ecommerce/view/screen/checkout/widget/shipping_method_bottom_sheet.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/dashboard/dashboard_screen.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/payment/payment_screen.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -60,6 +63,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   double _order = 0;
   bool _digitalPayment;
   bool _cod;
+  int select = 0;
 
   @override
   void initState() {
@@ -82,6 +86,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     _order = widget.totalOrderAmount + widget.discount;
+    final _x = Get.put(BaseController());
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -129,178 +134,167 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         .getUserInfo(context);
                                 String orderNote =
                                     _orderNoteController.text.trim();
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => PaymentScreen(
-                                              customerID: userID,
+                                //
+                                // if (Provider.of<OrderProvider>(context,
+                                //             listen: false)
+                                //         .paymentMethodIndex ==
+                                //     0) {
+                                //   showModalBottomSheet(
+                                //     context: context,
+                                //     isScrollControlled: true,
+                                //     backgroundColor: Colors.transparent,
+                                //     builder: (context) =>
+                                //         ShippingMethodBottomSheet(
+                                //             groupId: "",
+                                //             sellerIndex: 1,
+                                //             sellerId: 1),
+                                //   );
+                                // } else if (Provider.of<OrderProvider>(context,
+                                //             listen: false)
+                                //         .paymentMethodIndex ==
+                                //     1) {
+                                //   Navigator.pushReplacement(
+                                //       context,
+                                //       MaterialPageRoute(
+                                //           builder: (_) => PaymentScreen(
+                                //                 customerID: userID,
+                                //                 // addressID: Provider.of<
+                                //                 //             ProfileProvider>(
+                                //                 //         context,
+                                //                 //         listen: false)
+                                //                 //     .addressList[Provider.of<
+                                //                 //                 OrderProvider>(
+                                //                 //             context,
+                                //                 //             listen: false)
+                                //                 //         .addressIndex]
+                                //                 //     .id
+                                //                 //     .toString(),
+                                //                 couponCode:
+                                //                     Provider.of<CouponProvider>(
+                                //                                     context,
+                                //                                     listen:
+                                //                                         false)
+                                //                                 .discount !=
+                                //                             null
+                                //                         ? Provider.of<
+                                //                                     CouponProvider>(
+                                //                                 context,
+                                //                                 listen: false)
+                                //                             .coupon
+                                //                             .code
+                                //                         : '',
+                                //                 // billingId: Provider.of<
+                                //                 //             ProfileProvider>(
+                                //                 //         context,
+                                //                 //         listen: false)
+                                //                 //     .billingAddressList[Provider
+                                //                 //             .of<OrderProvider>(
+                                //                 //                 context,
+                                //                 //                 listen: false)
+                                //                 //         .billingAddressIndex]
+                                //                 //     .id
+                                //                 //     .toString(),
+                                //                 orderNote: orderNote,
+                                //               )));
+                                // }
 
-                                              couponCode: Provider.of<
-                                                                  CouponProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .discount !=
-                                                      null
-                                                  ? Provider.of<CouponProvider>(
-                                                          context,
-                                                          listen: false)
-                                                      .coupon
-                                                      .code
-                                                  : '',
-                                              // billingId: Provider
-                                              //     .of<ProfileProvider>(
-                                              //     context, listen: false)
-                                              //     .billingAddressList[Provider
-                                              //     .of<OrderProvider>(
-                                              //     context, listen: false)
-                                              //     .billingAddressIndex].id.toString(),
-                                              orderNote: orderNote,
-                                            )));
-                                // if (Provider
-                                //     .of<OrderProvider>(context, listen: false)
-                                //     .addressIndex == null) {
-                                //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                //       content: Text(getTranslated(
-                                //           'select_a_shipping_address', context)),
-                                //       backgroundColor: Colors.red));
-                                // } else if (Provider
-                                //     .of<OrderProvider>(context, listen: false)
-                                //     .billingAddressIndex == null) {
-                                //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                //       content: Text(getTranslated(
-                                //           'select_a_billing_address', context)),
-                                //       backgroundColor: Colors.red));
-                                // }
-                                //
-                                // else {
-                                //   List<CartModel> _cartList = [];
-                                //   _cartList.addAll(widget.cartList);
-                                //
-                                //   for (int index = 0; index <
-                                //       widget.cartList.length; index++) {
-                                //     for (int i = 0; i < Provider
-                                //         .of<CartProvider>(context, listen: false)
-                                //         .chosenShippingList
-                                //         .length; i++) {
-                                //       if (Provider
-                                //           .of<CartProvider>(context, listen: false)
-                                //           .chosenShippingList[i].cartGroupId ==
-                                //           widget.cartList[index].cartGroupId) {
-                                //         _cartList[index].shippingMethodId = Provider
-                                //             .of<CartProvider>(context, listen: false)
-                                //             .chosenShippingList[i].id;
-                                //         break;
-                                //       }
-                                //     }
-                                //   }
-                                //
-                                //   String orderNote = _orderNoteController.text.trim();
-                                //   double couponDiscount = Provider
-                                //       .of<CouponProvider>(context, listen: false)
-                                //       .discount != null ? Provider
-                                //       .of<CouponProvider>(context, listen: false)
-                                //       .discount : 0;
-                                //   String couponCode = Provider
-                                //       .of<CouponProvider>(context, listen: false)
-                                //       .discount != null ? Provider
-                                //       .of<CouponProvider>(context, listen: false)
-                                //       .coupon
-                                //       .code : '';
-                                //   if (Provider
-                                //       .of<OrderProvider>(context, listen: false)
-                                //       .paymentMethodIndex == 0) {
-                                //     Provider.of<OrderProvider>(context, listen: false)
-                                //         .placeOrder(
-                                //         OrderPlaceModel(
-                                //           CustomerInfo(
-                                //               Provider
-                                //                   .of<ProfileProvider>(
-                                //                   context, listen: false)
-                                //                   .addressList[Provider
-                                //                   .of<OrderProvider>(
-                                //                   context, listen: false)
-                                //                   .addressIndex].id.toString(),
-                                //               Provider
-                                //                   .of<ProfileProvider>(
-                                //                   context, listen: false)
-                                //                   .addressList[Provider
-                                //                   .of<OrderProvider>(
-                                //                   context, listen: false)
-                                //                   .addressIndex].address,
-                                //               Provider
-                                //                   .of<ProfileProvider>(
-                                //                   context, listen: false)
-                                //                   .billingAddressList[Provider
-                                //                   .of<OrderProvider>(
-                                //                   context, listen: false)
-                                //                   .billingAddressIndex].id.toString(),
-                                //               Provider
-                                //                   .of<ProfileProvider>(
-                                //                   context, listen: false)
-                                //                   .billingAddressList[Provider
-                                //                   .of<OrderProvider>(
-                                //                   context, listen: false)
-                                //                   .billingAddressIndex].address,
-                                //               orderNote
-                                //
-                                //
-                                //           ),
-                                //           _cartList, order.paymentMethodIndex == 0
-                                //             ? 'cash_on_delivery'
-                                //             : '', couponDiscount,
-                                //         ),
-                                //         _callback,
-                                //         _cartList,
-                                //         Provider
-                                //             .of<ProfileProvider>(
-                                //             context, listen: false)
-                                //             .addressList[Provider
-                                //             .of<OrderProvider>(context, listen: false)
-                                //             .addressIndex].id.toString(),
-                                //         couponCode,
-                                //         Provider
-                                //             .of<ProfileProvider>(
-                                //             context, listen: false)
-                                //             .billingAddressList[Provider
-                                //             .of<OrderProvider>(context, listen: false)
-                                //             .billingAddressIndex].id.toString(),
-                                //         orderNote);
-                                //   }
-                                //   else {
-                                //     String userID = await Provider.of<
-                                //         ProfileProvider>(context, listen: false)
-                                //         .getUserInfo(context);
-                                //     Navigator.pushReplacement(
-                                //         context, MaterialPageRoute(builder: (_) =>
-                                //         PaymentScreen(
-                                //           customerID: userID,
-                                //           addressID: Provider
-                                //               .of<ProfileProvider>(
-                                //               context, listen: false)
-                                //               .addressList[Provider
-                                //               .of<OrderProvider>(
-                                //               context, listen: false)
-                                //               .addressIndex].id.toString(),
-                                //           couponCode: Provider
-                                //               .of<CouponProvider>(
-                                //               context, listen: false)
-                                //               .discount != null ? Provider
-                                //               .of<CouponProvider>(
-                                //               context, listen: false)
-                                //               .coupon
-                                //               .code : '',
-                                //           billingId: Provider
-                                //               .of<ProfileProvider>(
-                                //               context, listen: false)
-                                //               .billingAddressList[Provider
-                                //               .of<OrderProvider>(
-                                //               context, listen: false)
-                                //               .billingAddressIndex].id.toString(),
-                                //           orderNote: orderNote,
-                                //
-                                //         )));
-                                //   }
-                                // }
+                                List<CartModel> _cartList = [];
+                                _cartList.addAll(widget.cartList);
+
+                                double couponDiscount =
+                                    Provider.of<CouponProvider>(context,
+                                                    listen: false)
+                                                .discount !=
+                                            null
+                                        ? Provider.of<CouponProvider>(context,
+                                                listen: false)
+                                            .discount
+                                        : 0;
+                                String couponCode = Provider.of<CouponProvider>(
+                                                context,
+                                                listen: false)
+                                            .discount !=
+                                        null
+                                    ? Provider.of<CouponProvider>(context,
+                                            listen: false)
+                                        .coupon
+                                        .code
+                                    : '';
+                                if (Provider.of<OrderProvider>(context,
+                                            listen: false)
+                                        .paymentMethodIndex ==
+                                    0) {
+                                  Provider.of<OrderProvider>(context,
+                                          listen: false)
+                                      .placeOrder(
+                                          OrderPlaceModel(
+                                            CustomerInfo(
+                                                "", "", "", "", orderNote),
+                                            _cartList,
+                                            order.paymentMethodIndex == 0
+                                                ? 'cash_on_delivery'
+                                                : '',
+                                            couponDiscount,
+                                          ),
+                                          _callback,
+                                          _cartList,
+                                          "",
+                                          couponCode,
+                                          "",
+                                          orderNote);
+                                } else if (Provider.of<OrderProvider>(context,
+                                            listen: false)
+                                        .paymentMethodIndex ==
+                                    1) {
+                                  String userID =
+                                      await Provider.of<ProfileProvider>(
+                                              context,
+                                              listen: false)
+                                          .getUserInfo(context);
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => PaymentScreen(
+                                                customerID: userID,
+                                                // addressID: Provider.of<
+                                                //             ProfileProvider>(
+                                                //         context,
+                                                //         listen: false)
+                                                //     .addressList[Provider.of<
+                                                //                 OrderProvider>(
+                                                //             context,
+                                                //             listen: false)
+                                                //         .addressIndex]
+                                                //     .id
+                                                //     .toString(),
+                                                couponCode:
+                                                    Provider.of<CouponProvider>(
+                                                                    context,
+                                                                    listen:
+                                                                        false)
+                                                                .discount !=
+                                                            null
+                                                        ? Provider.of<
+                                                                    CouponProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .coupon
+                                                            .code
+                                                        : '',
+                                                // billingId: Provider.of<
+                                                //             ProfileProvider>(
+                                                //         context,
+                                                //         listen: false)
+                                                //     .billingAddressList[Provider
+                                                //             .of<OrderProvider>(
+                                                //                 context,
+                                                //                 listen: false)
+                                                //         .billingAddressIndex]
+                                                //     .id
+                                                //     .toString(),
+                                                orderNote: orderNote,
+                                              )));
+                                }
                               },
                               style: TextButton.styleFrom(
                                 backgroundColor:
@@ -350,24 +344,37 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               style: titilliumRegular.copyWith(
                                   fontWeight: FontWeight.w600)),
                           Expanded(
-                            child: Text(
-                              Provider.of<OrderProvider>(context)
-                                          .addressIndex ==
-                                      null
-                                  ? getTranslated('add_your_address', context)
-                                  : Provider.of<ProfileProvider>(context,
-                                          listen: false)
-                                      .addressList[Provider.of<OrderProvider>(
-                                              context,
-                                              listen: false)
-                                          .addressIndex]
-                                      .address,
-                              style: titilliumRegular.copyWith(
-                                  fontSize: Dimensions.FONT_SIZE_SMALL),
-                              maxLines: 3,
-                              overflow: TextOverflow.fade,
+                            child: Obx(
+                              () => Text(
+                                _x.address.value == ''
+                                    ? getTranslated('add_your_address', context)
+                                    : _x.address.value,
+                                style: titilliumRegular.copyWith(
+                                    fontSize: Dimensions.FONT_SIZE_SMALL),
+                                maxLines: 3,
+                                overflow: TextOverflow.fade,
+                              ),
                             ),
                           ),
+                          // Expanded(
+                          //   child: Text(
+                          //     Provider.of<OrderProvider>(context)
+                          //                 .addressIndex ==
+                          //             null
+                          //         ? getTranslated('add_your_address', context)
+                          //         : Provider.of<ProfileProvider>(context,
+                          //                 listen: false)
+                          //             .addressList[Provider.of<OrderProvider>(
+                          //                     context,
+                          //                     listen: false)
+                          //                 .addressIndex]
+                          //             .address,
+                          //     style: titilliumRegular.copyWith(
+                          //         fontSize: Dimensions.FONT_SIZE_SMALL),
+                          //     maxLines: 3,
+                          //     overflow: TextOverflow.fade,
+                          //   ),
+                          // ),
                           InkWell(
                             onTap: () => Navigator.of(context).push(
                                 MaterialPageRoute(
@@ -382,70 +389,64 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     size: 15,
                                     color: Theme.of(context).cardColor)),
                           ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        SavedAddressListScreen()));
-                              },
-                              child: Image.asset(Images.EDIT_TWO,
-                                  width: 15,
-                                  height: 15,
-                                  color: ColorResources.getPrimary(context))),
+                          // TextButton(
+                          //     onPressed: () {
+                          //       Navigator.of(context).push(MaterialPageRoute(
+                          //           builder: (BuildContext context) =>
+                          //               SavedAddressListScreen()));
+                          //     },
+                          //     child: Image.asset(Images.EDIT_TWO,
+                          //         width: 15,
+                          //         height: 15,
+                          //         color: ColorResources.getPrimary(context))),
+                          SizedBox(width: 50),
                         ],
                       ),
-                      // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+
+                      // Row(mainAxisAlignment: MainAxisAlignment.start,
                       //   crossAxisAlignment: CrossAxisAlignment.center,
                       //   children: [
-                      //     Text(
-                      //         '${getTranslated('billing_address', context)} : ',
+                      //     Text('${getTranslated(
+                      //         'billing_address', context)} : ',
                       //         style: titilliumRegular.copyWith(
                       //             fontWeight: FontWeight.w600)),
-                      //     Expanded(
-                      //       child: Text(
-                      //         Provider.of<OrderProvider>(context)
-                      //                     .billingAddressIndex ==
-                      //                 null
-                      //             ? getTranslated('add_your_address', context)
-                      //             : Provider.of<ProfileProvider>(context,
-                      //                     listen: false)
-                      //                 .billingAddressList[
-                      //                     Provider.of<OrderProvider>(context,
-                      //                             listen: false)
-                      //                         .billingAddressIndex]
-                      //                 .address,
-                      //         style: titilliumRegular.copyWith(
-                      //             fontSize: Dimensions.FONT_SIZE_SMALL),
-                      //         maxLines: 3,
-                      //         overflow: TextOverflow.fade,
-                      //       ),
-                      //     ),
+                      //     Expanded(child: Text(
+                      //       Provider
+                      //           .of<OrderProvider>(context)
+                      //           .billingAddressIndex == null ? getTranslated(
+                      //           'add_your_address', context)
+                      //           : Provider
+                      //           .of<ProfileProvider>(context, listen: false)
+                      //           .billingAddressList[Provider
+                      //           .of<OrderProvider>(context, listen: false)
+                      //           .billingAddressIndex].address,
+                      //       style: titilliumRegular.copyWith(
+                      //           fontSize: Dimensions.FONT_SIZE_SMALL),
+                      //       maxLines: 3, overflow: TextOverflow.fade,
+                      //     ),),
                       //     InkWell(
-                      //       onTap: () => Navigator.of(context).push(
-                      //           MaterialPageRoute(
+                      //       onTap: () =>
+                      //           Navigator.of(context).push(MaterialPageRoute(
                       //               builder: (BuildContext context) =>
                       //                   AddNewAddressScreen(isBilling: true))),
                       //       child: Container(
                       //           decoration: BoxDecoration(
-                      //               borderRadius:
-                      //                   BorderRadius.all(Radius.circular(10)),
+                      //               borderRadius: BorderRadius.all(
+                      //                   Radius.circular(10)),
                       //               color: ColorResources.getPrimary(context)),
-                      //           child: Icon(Icons.add,
-                      //               size: 15,
-                      //               color: Theme.of(context).cardColor)),
+                      //           child: Icon(Icons.add, size: 15, color: Theme
+                      //               .of(context)
+                      //               .cardColor)),
                       //     ),
-                      //     TextButton(
-                      //         onPressed: () {
-                      //           Navigator.of(context).push(MaterialPageRoute(
-                      //               builder: (BuildContext context) =>
-                      //                   SavedBillingAddressListScreen()));
-                      //         },
-                      //         child: Image.asset(Images.EDIT_TWO,
-                      //             width: 15,
-                      //             height: 15,
-                      //             color: ColorResources.getPrimary(context)))
+                      //
+                      //     TextButton(onPressed: () {
+                      //       Navigator.of(context).push(MaterialPageRoute(
+                      //           builder: (BuildContext context) =>
+                      //               SavedBillingAddressListScreen()));
+                      //     }, child: Image.asset(Images.EDIT_TWO, width: 15,
+                      //         height: 15,
+                      //         color: ColorResources.getPrimary(context)))
                       //   ],
                       // ),
                     ]),
@@ -738,7 +739,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       _cod
                           ? CustomCheckBox(
                               title: getTranslated('cash_on_delivery', context),
-                              index: 0)
+                              index: 0,
+                            )
                           : SizedBox(),
                       _digitalPayment
                           ? CustomCheckBox(

@@ -135,54 +135,56 @@ class _CartScreenState extends State<CartScreen> {
                           height: 90,
                           child: TextButton(
                             onPressed: () {
-                              if (Provider.of<AuthProvider>(context,
-                                      listen: false)
-                                  .isLoggedIn()) {
-                                if (cart.cartList.length == 0) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text(getTranslated(
-                                        'select_at_least_one_product',
-                                        context)),
-                                    backgroundColor: Colors.red,
-                                  ));
-                                } else if (cart.chosenShippingList == null ||
-                                    cart.chosenShippingList.length == 0) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(getTranslated(
-                                              'select_shipping_method',
-                                              context)),
-                                          backgroundColor: Colors.red));
-                                } else if (cart.chosenShippingList.length <
-                                        cartProductList.length &&
-                                    Provider.of<SplashProvider>(context,
-                                                listen: false)
-                                            .configModel
-                                            .shippingMethod ==
-                                        'sellerwise_shipping') {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(getTranslated(
-                                              'select_all_shipping_method',
-                                              context)),
-                                          backgroundColor: Colors.red));
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => CheckoutScreen(
-                                                cartList: cartList,
-                                                totalOrderAmount: amount,
-                                                shippingFee: shippingAmount,
-                                                discount: discount,
-                                                tax: tax,
-                                              )));
-                                }
-                              } else {
-                                showAnimatedDialog(context, GuestDialog(),
-                                    isFlip: true);
-                              }
+                              // if (Provider.of<AuthProvider>(context,
+                              //         listen: false)
+                              //     .isLoggedIn()) {
+                              //   if (cart.cartList.length == 0) {
+                              //     ScaffoldMessenger.of(context)
+                              //         .showSnackBar(SnackBar(
+                              //       content: Text(getTranslated(
+                              //           'select_at_least_one_product',
+                              //           context)),
+                              //       backgroundColor: Colors.red,
+                              //     ));
+                              //   } else if (cart.chosenShippingList == null ||
+                              //       cart.chosenShippingList.length == 0) {
+                              //     ScaffoldMessenger.of(context).showSnackBar(
+                              //         SnackBar(
+                              //             content: Text(getTranslated(
+                              //                 'select_shipping_method',
+                              //                 context)),
+                              //             backgroundColor: Colors.red));
+                              //   } else if (cart.chosenShippingList.length <
+                              //           cartProductList.length &&
+                              //       Provider.of<SplashProvider>(context,
+                              //                   listen: false)
+                              //               .configModel
+                              //               .shippingMethod ==
+                              //           'sellerwise_shipping') {
+                              //     ScaffoldMessenger.of(context).showSnackBar(
+                              //         SnackBar(
+                              //             content: Text(getTranslated(
+                              //                 'select_all_shipping_method',
+                              //                 context)),
+                              //             backgroundColor: Colors.red));
+                              //   } else {
+                              //
+                              //   }
+                              // } else {
+                              //   showAnimatedDialog(context, GuestDialog(),
+                              //       isFlip: true);
+                              // }
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => CheckoutScreen(
+                                            cartList: cartList,
+                                            totalOrderAmount: amount,
+                                            shippingFee: shippingAmount,
+                                            discount: discount,
+                                            tax: tax,
+                                          )));
                             },
                             style: TextButton.styleFrom(
                               backgroundColor: Theme.of(context).highlightColor,

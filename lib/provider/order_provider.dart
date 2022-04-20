@@ -165,7 +165,7 @@ class OrderProvider with ChangeNotifier {
     }
   }
 
-  void setPaymentMethod(int index) {
+   setPaymentMethod(int index) {
     _paymentMethodIndex = index;
     notifyListeners();
   }
