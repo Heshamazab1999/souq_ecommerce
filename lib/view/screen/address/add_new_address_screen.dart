@@ -13,6 +13,7 @@ import 'package:flutter_sixvalley_ecommerce/view/basewidget/custom_app_bar.dart'
 import 'package:flutter_sixvalley_ecommerce/view/basewidget/textfield/custom_textfield.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/address/controller.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/address/select_location_screen.dart';
+import 'package:geocoder2/geocoder2.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 
@@ -131,7 +132,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                     // physics: BouncingScrollPhysics(),
                                     children: [
                                       Container(
-                                        height: 150,
+                                        height: 126,
                                         width:
                                             MediaQuery.of(context).size.width,
                                         child: ClipRRect(
@@ -140,255 +141,170 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                           child: Stack(
                                             clipBehavior: Clip.none,
                                             children: [
-                                              Obx(
-                                                  () =>
-                                                      _x.state == ViewState.busy
-                                                          ? Center(
-                                                              child: CircularProgressIndicator(
-                                                                  valueColor: AlwaysStoppedAnimation<
-                                                                      Color>(Theme.of(
-                                                                          context)
-                                                                      .primaryColor)),
-                                                            )
-                                                          : Stack(
-                                                              children: [
-                                                                GoogleMap(
-                                                                  zoomControlsEnabled:
-                                                                      false,
-                                                                  //Map widget from google_maps_flutter package
-                                                                  zoomGesturesEnabled:
-                                                                      true,
-                                                                  //enable Zoom in, out on map
-                                                                  initialCameraPosition:
-                                                                      CameraPosition(
-                                                                    //innital position in map
-                                                                    target: LatLng(
-                                                                        _x.position
-                                                                            .latitude,
-                                                                        _x.position
-                                                                            .longitude),
-                                                                    //initial position
-                                                                    zoom:
-                                                                        14.0, //initial zoom level
-                                                                  ),
-                                                                  mapType: MapType
-                                                                      .normal,
-                                                                  //map type
-                                                                  onMapCreated:
-                                                                      (controller) {
-                                                                    //method called when map is created
-                                                                    _x.controller
-                                                                        .complete();
-                                                                    // _x.markLocation();
-                                                                  },
-                                                                  markers:
-                                                                      _x.marker,
-                                                                ),
-                                                                Positioned(
-                                                                  bottom: 10,
-                                                                  right: 0,
-                                                                  child:
-                                                                      GestureDetector(
-                                                                    onTap:
-                                                                        () async {
-                                                                      _x.markLocation();
-                                                                      List<Placemark>
-                                                                          placemarks =
-                                                                          await placemarkFromCoordinates(
-                                                                              _x.position.latitude,
-                                                                              _x.position.longitude);
-                                                                      setState(
-                                                                          () {
-                                                                        //get place name from lat and lang
-                                                                        location = placemarks.first.administrativeArea.toString() +
-                                                                            ", " +
-                                                                            placemarks.first.street.toString();
-                                                                        print(
-                                                                            placemarks);
-                                                                        _addressController.text = placemarks
-                                                                            .first
-                                                                            .locality;
-                                                                        _x.address.value = placemarks
-                                                                            .first
-                                                                            .locality;
-                                                                      });
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      width: 40,
-                                                                      height:
-                                                                          40,
-                                                                      margin: EdgeInsets.only(
-                                                                          right:
-                                                                              Dimensions.PADDING_SIZE_LARGE),
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
-                                                                        color: ColorResources.getChatIcon(
-                                                                            context),
-                                                                      ),
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .my_location,
-                                                                        color: Theme.of(context)
-                                                                            .primaryColor,
-                                                                        size:
-                                                                            20,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Positioned(
-                                                                  right: 0,
-                                                                  top: 10,
-                                                                  child:
-                                                                      GestureDetector(
-                                                                    onTap: () {
-                                                                      Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (BuildContext context) => MyLocation(
-                                                                                    locationPass: _addressController.text,
-                                                                                  )));
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      width: 40,
-                                                                      height:
-                                                                          40,
-                                                                      margin: EdgeInsets.only(
-                                                                          right:
-                                                                              Dimensions.PADDING_SIZE_LARGE),
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .fullscreen,
-                                                                        color: Theme.of(context)
-                                                                            .primaryColor,
-                                                                        size:
-                                                                            20,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ))
-                                              // GoogleMap(
-                                              //      mapType: MapType.hybrid,
-                                              //      initialCameraPosition:
-                                              //          _kGooglePlex,
-                                              //      onMapCreated:
-                                              //          (GoogleMapController
-                                              //              controller) {
-                                              //        _controllers
-                                              //            .complete(controller);
-                                              //      },
-                                              //  ),
-                                              //  locationProvider.loading
-                                              //      ? Center(
-                                              //          child: CircularProgressIndicator(
-                                              //              valueColor:
-                                              //                  AlwaysStoppedAnimation<
-                                              //                      Color>(Theme.of(
-                                              //                          context)
-                                              //                      .primaryColor)))
-                                              //      : SizedBox(),
-                                              //  Container(
-                                              //      width: MediaQuery.of(context)
-                                              //          .size
-                                              //          .width,
-                                              //      alignment: Alignment.center,
-                                              //      height: MediaQuery.of(context)
-                                              //          .size
-                                              //          .height,
-                                              //      child: Icon(
-                                              //        Icons.location_on,
-                                              //        size: 40,
-                                              //        color: Theme.of(context)
-                                              //            .primaryColor,
-                                              //      )),
-                                              // Positioned(
-                                              //   bottom: 10,
-                                              //   right: 0,
-                                              //   child: InkWell(
-                                              //     onTap: () {
-                                              //       locationProvider
-                                              //           .getCurrentLocation(
-                                              //               context, true,
-                                              //               mapController:
-                                              //                   _controller);
-                                              //       print(locationProvider.position);
-                                              //     },
-                                              //     child: Container(
-                                              //       width: 30,
-                                              //       height: 30,
-                                              //       margin: EdgeInsets.only(
-                                              //           right: Dimensions
-                                              //               .PADDING_SIZE_LARGE),
-                                              //       decoration: BoxDecoration(
-                                              //         borderRadius: BorderRadius
-                                              //             .circular(Dimensions
-                                              //                 .PADDING_SIZE_SMALL),
-                                              //         color: ColorResources
-                                              //             .getChatIcon(context),
-                                              //       ),
-                                              //       child: Icon(
-                                              //         Icons.my_location,
-                                              //         color: Theme.of(context)
-                                              //             .primaryColor,
-                                              //         size: 20,
-                                              //       ),
-                                              //     ),
-                                              //   ),
-                                              // ),
-                                              // Positioned(
-                                              //   top: 10,
-                                              //   right: 0,
-                                              //   child: InkWell(
-                                              //     onTap: () {
-                                              //       Navigator.of(context).push(
-                                              //           MaterialPageRoute(
-                                              //               builder: (BuildContext
-                                              //                       context) =>
-                                              //                   SelectLocationScreen(
-                                              //                       googleMapController:
-                                              //                           _controller)));
-                                              //     },
-                                              //     child:
-                                              //     Container(
-                                              //       width: 30,
-                                              //       height: 30,
-                                              //       margin: EdgeInsets.only(
-                                              //           right: Dimensions
-                                              //               .PADDING_SIZE_LARGE),
-                                              //       decoration: BoxDecoration(
-                                              //         borderRadius: BorderRadius
-                                              //             .circular(Dimensions
-                                              //                 .PADDING_SIZE_SMALL),
-                                              //         color: Colors.white,
-                                              //       ),
-                                              //       child: Icon(
-                                              //         Icons.fullscreen,
-                                              //         color: Theme.of(context)
-                                              //             .primaryColor,
-                                              //         size: 20,
-                                              //       ),
-                                              //     ),
-                                              //   ),
-                                              // ),
+                                              GoogleMap(
+                                                mapType: MapType.normal,
+                                                initialCameraPosition:
+                                                    CameraPosition(
+                                                  target: widget.isEnableUpdate
+                                                      ? LatLng(
+                                                          double.parse(widget
+                                                                  .address
+                                                                  .latitude) ??
+                                                              0.0,
+                                                          double.parse(widget
+                                                                  .address
+                                                                  .longitude) ??
+                                                              0.0)
+                                                      : LatLng(
+                                                          locationProvider
+                                                                  .position
+                                                                  .latitude ??
+                                                              0.0,
+                                                          locationProvider
+                                                                  .position
+                                                                  .longitude ??
+                                                              0.0),
+                                                  zoom: 17,
+                                                ),
+                                                onTap: (latLng) {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              SelectLocationScreen(
+                                                                  googleMapController:
+                                                                      _controller)));
+                                                },
+                                                zoomControlsEnabled: false,
+                                                compassEnabled: false,
+                                                indoorViewEnabled: true,
+                                                mapToolbarEnabled: false,
+                                                onCameraIdle: () {
+                                                  if (_updateAddress) {
+                                                    locationProvider
+                                                        .updatePosition(
+                                                            _cameraPosition,
+                                                            true,
+                                                            null,
+                                                            context);
+                                                  } else {
+                                                    _updateAddress = true;
+                                                  }
+                                                },
+                                                onCameraMove: ((_position) =>
+                                                    _cameraPosition =
+                                                        _position),
+                                                onMapCreated:
+                                                    (GoogleMapController
+                                                        controller) {
+                                                  _controller = controller;
+                                                  if (!widget.isEnableUpdate &&
+                                                      _controller != null) {
+                                                    Provider.of<LocationProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .getCurrentLocation(
+                                                            context, true,
+                                                            mapController:
+                                                                _controller);
+                                                  }
+                                                },
+                                              ),
+                                              locationProvider.loading
+                                                  ? Center(
+                                                      child: CircularProgressIndicator(
+                                                          valueColor:
+                                                              AlwaysStoppedAnimation<
+                                                                  Color>(Theme.of(
+                                                                      context)
+                                                                  .primaryColor)))
+                                                  : SizedBox(),
+                                              Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  alignment: Alignment.center,
+                                                  height: MediaQuery.of(context)
+                                                      .size
+                                                      .height,
+                                                  child: Icon(
+                                                    Icons.location_on,
+                                                    size: 40,
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                  )),
+                                              Positioned(
+                                                bottom: 10,
+                                                right: 0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    locationProvider
+                                                        .getCurrentLocation(
+                                                            context, true,
+                                                            mapController:
+                                                                _controller);
+                                                  },
+                                                  child: Container(
+                                                    width: 30,
+                                                    height: 30,
+                                                    margin: EdgeInsets.only(
+                                                        right: Dimensions
+                                                            .PADDING_SIZE_LARGE),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius
+                                                          .circular(Dimensions
+                                                              .PADDING_SIZE_SMALL),
+                                                      color: ColorResources
+                                                          .getChatIcon(context),
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.my_location,
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 10,
+                                                right: 0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                SelectLocationScreen(
+                                                                    googleMapController:
+                                                                        _controller)));
+                                                  },
+                                                  child: Container(
+                                                    width: 30,
+                                                    height: 30,
+                                                    margin: EdgeInsets.only(
+                                                        right: Dimensions
+                                                            .PADDING_SIZE_LARGE),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius
+                                                          .circular(Dimensions
+                                                              .PADDING_SIZE_SMALL),
+                                                      color: Colors.white,
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.fullscreen,
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
                                       ),
+
                                       Padding(
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Center(
@@ -525,9 +441,10 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         textInputType:
                                             TextInputType.streetAddress,
                                         textInputAction: TextInputAction.next,
-                                        // focusNode: _addressNode,
+                                        focusNode: _addressNode,
                                         nextNode: _nameNode,
-                                        controller: _addressController,
+                                        controller:
+                                            locationProvider.locationController,
                                       ),
                                       SizedBox(
                                           height:
@@ -736,20 +653,25 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                             city: _cityController.text ?? '',
                                             zip: _zipCodeController.text ?? '',
                                             isBilling: widget.isBilling ? 1 : 0,
-                                            address:
-                                                _addressController.text ?? '',
+                                            address: locationProvider
+                                                    .locationController.text ??
+                                                '',
                                             latitude: widget.isEnableUpdate
-                                                ? _x.position.latitude
+                                                ? locationProvider
+                                                        .position.latitude
                                                         .toString() ??
                                                     widget.address.latitude
-                                                : _x.position.latitude
+                                                : locationProvider
+                                                        .position.latitude
                                                         .toString() ??
                                                     '',
                                             longitude: widget.isEnableUpdate
-                                                ? _x.position.longitude
+                                                ? locationProvider
+                                                        .position.longitude
                                                         .toString() ??
                                                     widget.address.longitude
-                                                : _x.position.longitude
+                                                : locationProvider
+                                                        .position.longitude
                                                         .toString() ??
                                                     '',
                                           );

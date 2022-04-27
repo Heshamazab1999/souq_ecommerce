@@ -189,8 +189,9 @@ class LocationProvider with ChangeNotifier {
 
   // End Address Position
   void dragableAddress() async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(_position.latitude, _position.longitude);
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        _position.latitude, _position.longitude,
+        localeIdentifier: "ar_SA");
     _address = placemarks.first;
     _locationController.text = placeMarkToAddress(_address);
     //saveUserAddress(address: currentAddresses.first);
